@@ -2,13 +2,24 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
-[submodule "config/tmux/plugins/tpm"]
-	path = config/tmux/plugins/tpm
+[submodule "tmux/plugins/tmux"]
+	path = tmux/plugins/tmux
+	url = https://git::@github.com/dracula/tmux
+	ignore = dirty
+[submodule "tmux/plugins/tpm"]
+	path = tmux/plugins/tpm
 	url = https://git::@github.com/tmux-plugins/tpm
 	ignore = dirty
-[submodule "config/tmux/plugins/tmux-sensible"]
-	path = config/tmux/plugins/tmux-sensible
+[submodule "tmux/plugins/tmux-sensible"]
+	path = tmux/plugins/tmux-sensible
 	url = https://git::@github.com/tmux-plugins/tmux-sensible
+	ignore = dirty
+[submodule "tmux/plugins/tmux-yank"]
+	path = tmux/plugins/tmux-yank
+	url = https://git::@github.com/tmux-plugins/tmux-yank
+[submodule "tmux/plugins/vim-tmux-navigator"]
+	path = tmux/plugins/vim-tmux-navigator
+	url = https://git::@github.com/christoomey/vim-tmux-navigator
 	ignore = dirty
 [submodule "config/alacritty/themes"]
 	path = config/alacritty/themes
