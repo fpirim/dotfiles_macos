@@ -33,9 +33,16 @@
    - command: ./setup_homebrew.zsh
      stdout: true
      stderr: true
+     description: Setting up Homebrew and packages
    - command: ./setup_zsh.zsh
      stdout: true
      stderr: true
+     description: Setting up Zsh and plugins
    - command: ./setup_macos.zsh
      stdout: true
      stderr: true
+     description: Setting up macOS preferences
+   - command: ./setup_tailscale.zsh
+     stdout: true
+     stderr: true
+     description: Setting up Tailscale preferences

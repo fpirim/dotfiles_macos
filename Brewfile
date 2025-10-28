@@ -51,6 +51,8 @@ cask "brave-browser"
 # App to build and share containerised applications and microservices
 cask "docker-desktop"
 cask "font-jetbrains-mono-nerd-font"
+# Client for the Google Drive storage service
+cask "google-drive"
 # Java IDE by JetBrains
 cask "intellij-idea"
 # Control your tools with a few keystrokes
