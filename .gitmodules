@@ -1,0 +1,16 @@
+[submodule "dotbot"]
+	path = dotbot
+	url = https://github.com/anishathalye/dotbot
+	ignore = dirty
+[submodule "config/tmux/plugins/tpm"]
+	path = config/tmux/plugins/tpm
+	url = https://git::@github.com/tmux-plugins/tpm
+	ignore = dirty
+[submodule "config/tmux/plugins/tmux-sensible"]
+	path = config/tmux/plugins/tmux-sensible
+	url = https://git::@github.com/tmux-plugins/tmux-sensible
+	ignore = dirty
+[submodule "config/alacritty/themes"]
+	path = config/alacritty/themes
+	url = https://github.com/alacritty/alacritty-theme
+	ignore = dirty

@@ -1,0 +1,47 @@
+[general]
+import = [
+	"~/.config/alacritty/themes/themes/nightfly.toml"
+]
+
+[terminal.shell]
+program = "/bin/zsh"
+args = ["-l", "-c", "tmux new-session -A -D -s 'Home'"]
+
+[cursor.style]
+shape = "Beam"
+blinking = "Always"
+
+[scrolling]
+history = 100000
+multiplier = 3
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+padding.x = 10
+padding.y = 10
+
+# decorations = "Buttonless"
+startup_mode = "Maximized"
+opacity = 0.8
+blur = true
+option_as_alt = "OnlyLeft"
+
+[font]
+normal        = { family = "JetBrainsMono Nerd Font", style = "Regular" }
+bold          = { family = "JetBrainsMono Nerd Font", style = "Bold" }
+italic        = { family = "JetBrainsMono Nerd Font", style = "MediumItalic" }
+bold_italic   = { family = "JetBrainsMono Nerd Font", style = "BoldItalic" }
+size          = 19
+offset        = { x = 0, y = 0 }
+glyph_offset  = { x = 0, y = 0 }
+
+[keyboard]
+bindings = [
+  { key = "V",      mods = "Control|Shift", action = "Paste" },
+  { key = "C",      mods = "Control|Shift", action = "Copy" },
+  { key = "Left",   mods = "Control",       chars = "\u001BB" },
+  { key = "Right",  mods = "Control",       chars = "\u001BF" }
+]
+

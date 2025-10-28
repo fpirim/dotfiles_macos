@@ -1,0 +1,41 @@
+- defaults:
+    link:
+      relink: true
+
+- clean: ['~']
+
+- link:
+    ~/.zshrc:
+    ~/.zshenv:
+    ~/.gitconfig:
+    ~/.tmux.conf:
+    ~/.config/bat:
+      create: true
+      path: config/bat
+    ~/.config/alacritty:
+      create: true
+      path: config/alacritty
+    ~/.config/nvim:
+      create: true
+      path: config/nvim
+    ~/.config/ohmyposh:
+      create: true
+      path: config/ohmyposh
+    ~/.config/tmux:
+      create: true
+      path: config/tmux
+
+- create:
+   - ~/Projects
+
+- shell:
+   - [git submodule update --init --recursive, Installing submodules]
+   - command: ./setup_homebrew.zsh
+     stdout: true
+     stderr: true
+   - command: ./setup_zsh.zsh
+     stdout: true
+     stderr: true
+   - command: ./setup_macos.zsh
+     stdout: true
+     stderr: true

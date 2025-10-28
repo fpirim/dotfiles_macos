@@ -1,0 +1,6 @@
+[core]
+	autocrlf = input
+	editor = nvim
+[user]
+	email = 7191354+fpirim@users.noreply.github.com
+	name = Fikret Pirim
