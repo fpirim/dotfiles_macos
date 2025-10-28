@@ -8,6 +8,7 @@
     ~/.zshrc:
     ~/.zshenv:
     ~/.gitconfig:
+    ~/.tmux:
     ~/.tmux.conf:
     ~/.config/bat:
       create: true
@@ -21,9 +22,6 @@
     ~/.config/ohmyposh:
       create: true
       path: config/ohmyposh
-    ~/.config/tmux:
-      create: true
-      path: config/tmux
 
 - create:
    - ~/Projects
