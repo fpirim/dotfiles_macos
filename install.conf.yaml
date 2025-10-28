@@ -32,6 +32,10 @@
      stdout: true
      stderr: true
      description: Setting up Homebrew and packages
+   - command: ./setup_nvm.zsh
+     stdout: true
+     stderr: true
+     description: Setting up NVM and Node.js
    - command: ./setup_zsh.zsh
      stdout: true
      stderr: true

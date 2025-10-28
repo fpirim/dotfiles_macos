@@ -16,10 +16,13 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      local lspconfig = require("lspconfig")
+      -- Use the new vim.lsp.config API (neovim 0.11+)
 
       -- Configure Lua Language Server
-      lspconfig.lua_ls.setup({
+      vim.lsp.config.lua_ls = {
+        cmd = { "lua-language-server" },
+        filetypes = { "lua" },
+        root_markers = { ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml", "selene.toml", "selene.yml", ".git" },
         settings = {
           Lua = {
             diagnostics = {
@@ -27,11 +30,18 @@ return {
             }
           }
         }
-      })
+      }
 
-      lspconfig.ts_ls.setup({})
+      vim.lsp.config.ts_ls = {
+        cmd = { "typescript-language-server", "--stdio" },
+        filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+        root_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" },
+      }
 
-      lspconfig.yamlls.setup({
+      vim.lsp.config.yamlls = {
+        cmd = { "yaml-language-server", "--stdio" },
+        filetypes = { "yaml", "yaml.docker-compose" },
+        root_markers = { ".git" },
         settings = {
           yaml = {
             ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
@@ -39,7 +49,12 @@ return {
             "/*.k8s.yaml",
           },
         }
-      })
+      }
+
+      -- Enable the LSP servers
+      vim.lsp.enable("lua_ls")
+      vim.lsp.enable("ts_ls")
+      vim.lsp.enable("yamlls")
 
       vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {})
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})

@@ -57,8 +57,6 @@ cask "google-drive"
 cask "intellij-idea"
 # Control your tools with a few keystrokes
 cask "raycast"
-# Move and resize windows using keyboard shortcuts or snap areas
-cask "rectangle"
 # Mesh VPN based on WireGuard
 cask "tailscale-app"
 # Open-source code editor
