@@ -1,14 +1,17 @@
 return {
   {
     "nvimtools/none-ls.nvim",
-    dependencies = { "williamboman/mason.nvim" },
+    dependencies = { 
+      "williamboman/mason.nvim",
+      "nvimtools/none-ls-extras.nvim",
+    },
     config = function()
       local null_ls = require("null-ls")
       null_ls.setup({
         sources = {
           null_ls.builtins.formatting.stylua,
-          null_ls.builtins.formatting.eslint_d,
           null_ls.builtins.formatting.prettier,
+          require("none-ls.code_actions.eslint"),
         }
       })
 
@@ -24,7 +27,7 @@ return {
     },
     config = function()
       require("mason-null-ls").setup({
-        ensure_installed = { "stylua", "prettier", "eslint_d" },
+        ensure_installed = { "stylua", "prettier", "eslint" },
         automatic_installation = false,
       })
     end
