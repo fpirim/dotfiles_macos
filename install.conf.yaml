@@ -37,6 +37,10 @@
      stdout: true
      stderr: true
      description: Setting up NVM and Node.js
+   - command: ./setup_sdkman.zsh
+     stdout: true
+     stderr: true
+     description: Setting up SDKMAN and Java
    - command: ./setup_zsh.zsh
      stdout: true
      stderr: true
