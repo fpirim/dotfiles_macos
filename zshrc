@@ -13,10 +13,7 @@ fi
 source "${ZINIT_HOME}/zinit.zsh"
 
 # Add in zsh plugins
-zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
-zinit light zsh-users/zsh-autosuggestions
-zinit light Aloxaf/fzf-tab
 
 # Add in snippets
 zinit snippet OMZL::git.zsh
@@ -32,7 +29,22 @@ zinit snippet OMZP::command-not-found
 # Load completions
 autoload -Uz compinit && compinit
 
+# Load math functions for fzf-tab (must be before fzf-tab loads)
+# fzf-tab uses min() and max() functions in arithmetic expressions at lib/-ftb-fzf:98
+autoload -Uz zmathfunc && zmathfunc
+
 zinit cdreplay -q
+
+# Load fzf first (must be before fzf-tab)
+# Use the new fzf --zsh integration (fzf 0.48.0+)
+if command -v fzf &> /dev/null; then
+  source <(fzf --zsh)
+fi
+
+# fzf-tab needs to be loaded after compinit and fzf, and before plugins that wrap widgets
+zinit light Aloxaf/fzf-tab
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting
 
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/zen.toml)"
 
@@ -62,12 +74,15 @@ setopt globDots
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
+zstyle ':completion:*' special-dirs false
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+zstyle ':autocomplete:*' default-context history-incremental-search-backward
+zstyle ':autocomplete:history-search:*' list-lines 8  # int
+zstyle ':autocomplete:*' min-input 1
 
 # Aliases
 alias ls='eza -lah --icons --git'
-alias exa='eza -lah --icons --git'
 alias bbd='brew bundle dump --force --describe'
 alias vim='nvim'
 alias vi='nvim'
@@ -92,8 +107,7 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export HOMEBREW_CASK_OPTS="--no-quarantine"
 
 # Shell integrations
-eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd cd zsh)"
+eval "$(zoxide init --cmd=cd zsh)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
