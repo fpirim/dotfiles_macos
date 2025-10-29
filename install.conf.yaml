@@ -10,6 +10,7 @@
     ~/.gitconfig:
     ~/.tmux:
     ~/.tmux.conf:
+    ~/.hammerspoon:
     ~/.config/bat:
       create: true
       path: config/bat

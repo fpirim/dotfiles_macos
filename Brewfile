@@ -53,6 +53,8 @@ cask "docker-desktop"
 cask "font-jetbrains-mono-nerd-font"
 # Client for the Google Drive storage service
 cask "google-drive"
+# Desktop automation application
+cask "hammerspoon"
 # Java IDE by JetBrains
 cask "intellij-idea"
 # Control your tools with a few keystrokes
