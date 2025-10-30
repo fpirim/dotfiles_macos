@@ -4,7 +4,7 @@
 # Automatically detects if this is first machine (export) or additional machine (import)
 
 SCRIPT_DIR="${0:A:h}"
-GOOGLE_DRIVE_CONFIG="$HOME/Google Drive/My Drive/dotfiles-private/tailscale.config.yml"
+GOOGLE_DRIVE_CONFIG="$HOME/Google Drive/My Drive/private/configs/tailscale.config.yml"
 
 # Colors
 GREEN='\033[0;32m'
