@@ -55,4 +55,8 @@ else
     echo "\nWarning: sdkmanager not found. Installation may have failed."
 fi
 
+# sdkmanager --install "system-images;android-35;google_apis;arm64-v8a"
+# avdmanager create avd -n Pixel_7_API_35 -k "system-images;android-35;google_apis;arm64-v8a" -d pixel_7
+# emulator -avd Pixel_7_API_35 -netdelay none -netspeed full -gpu host
+
 echo "\n<<< Android SDK Setup Complete >>>\n"
