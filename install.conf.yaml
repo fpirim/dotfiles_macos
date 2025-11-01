@@ -23,7 +23,7 @@
     ~/.config/ohmyposh:
       create: true
       path: config/ohmyposh
-
+  
 - create:
    - ~/Projects
 
@@ -49,3 +49,7 @@
      stdout: true
      stderr: true
      description: Setting up Tailscale preferences
+   - command: ./setup_android_sdk.zsh
+     stdout: true
+     stderr: true
+     description: Setting up Android development environment

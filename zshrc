@@ -109,6 +109,14 @@ export HOMEBREW_CASK_OPTS="--no-quarantine"
 # Shell integrations
 eval "$(zoxide init --cmd=cd zsh)"
 
+# Add custom scripts $HOME/.local/share/scripts/bin to path
+export PATH="$PATH:$HOME/.local/share/scripts/bin"
+
+# Android
+export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
+export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$ANDROID_SDK_ROOT/emulator:$PATH
+
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
