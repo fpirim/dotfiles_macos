@@ -3,8 +3,8 @@
 echo "\n<<< Starting Android SDK Setup >>>\n"
 
 # Set Android SDK directory
-export ANDROID_SDK_ROOT="$HOME/Library/Android/sdk"
-export CMDLINE_TOOLS_DIR="$ANDROID_SDK_ROOT/cmdline-tools/latest"
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export CMDLINE_TOOLS_DIR="$ANDROID_HOME/cmdline-tools/latest"
 
 # Check if Android SDK command-line tools are already installed
 if [ -d "$CMDLINE_TOOLS_DIR" ] && [ -f "$CMDLINE_TOOLS_DIR/bin/sdkmanager" ]; then
@@ -33,7 +33,7 @@ else
 
     # Create Android SDK directory structure
     echo "Creating Android SDK directory structure..."
-    mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools"
+    mkdir -p "$ANDROID_HOME/cmdline-tools"
 
     # Move cmdline-tools to the correct location
     echo "Moving command-line tools to $CMDLINE_TOOLS_DIR..."
@@ -48,7 +48,7 @@ fi
 # Verify installation
 if [ -f "$CMDLINE_TOOLS_DIR/bin/sdkmanager" ]; then
     echo "\nVerifying installation..."
-    echo "Android SDK location: $ANDROID_SDK_ROOT"
+    echo "Android SDK location: $ANDROID_HOME"
     echo "Command-line tools location: $CMDLINE_TOOLS_DIR"
     echo "sdkmanager found at: $CMDLINE_TOOLS_DIR/bin/sdkmanager"
 else
