@@ -8,6 +8,30 @@ resizer.resizedWindow = nil
 resizer.startMousePos = nil
 resizer.startWindowFrame = nil
 resizer.resizeTimer = nil
+resizer.clickRegion = nil  -- Store which region was clicked (tl, tr, bl, br)
+
+-- Function to detect which region of the window was clicked
+-- Divides window into 4 equal quadrants: top-left, top-right, bottom-left, bottom-right
+local function detectClickRegion(mousePos, windowFrame)
+    local relativeX = mousePos.x - windowFrame.x
+    local relativeY = mousePos.y - windowFrame.y
+    local midX = windowFrame.w / 2
+    local midY = windowFrame.h / 2
+
+    if relativeX < midX then
+        if relativeY < midY then
+            return "tl"  -- top-left
+        else
+            return "bl"  -- bottom-left
+        end
+    else
+        if relativeY < midY then
+            return "tr"  -- top-right
+        else
+            return "br"  -- bottom-right
+        end
+    end
+end
 
 -- Function to update window size while resizing
 local function updateWindowSize()
@@ -15,30 +39,88 @@ local function updateWindowSize()
         local currentMousePos = hs.mouse.absolutePosition()
         local deltaX = currentMousePos.x - resizer.startMousePos.x
         local deltaY = currentMousePos.y - resizer.startMousePos.y
-        
-        -- Calculate new size based on mouse movement
-        local newWidth = resizer.startWindowFrame.w + deltaX
-        local newHeight = resizer.startWindowFrame.h + deltaY
-        
+
         -- Set minimum size to prevent window from becoming too small
         local minWidth = 200
         local minHeight = 100
-        
-        if newWidth < minWidth then
-            newWidth = minWidth
+
+        local newFrame = {}
+
+        -- Resize based on which region was clicked, keeping opposite corner fixed
+        if resizer.clickRegion == "tl" then
+            -- Top-left clicked: keep bottom-right corner fixed
+            local fixedX = resizer.startWindowFrame.x + resizer.startWindowFrame.w
+            local fixedY = resizer.startWindowFrame.y + resizer.startWindowFrame.h
+
+            newFrame.x = resizer.startWindowFrame.x + deltaX
+            newFrame.y = resizer.startWindowFrame.y + deltaY
+            newFrame.w = fixedX - newFrame.x
+            newFrame.h = fixedY - newFrame.y
+
+            -- Apply minimum constraints
+            if newFrame.w < minWidth then
+                newFrame.x = fixedX - minWidth
+                newFrame.w = minWidth
+            end
+            if newFrame.h < minHeight then
+                newFrame.y = fixedY - minHeight
+                newFrame.h = minHeight
+            end
+
+        elseif resizer.clickRegion == "tr" then
+            -- Top-right clicked: keep bottom-left corner fixed
+            local fixedX = resizer.startWindowFrame.x
+            local fixedY = resizer.startWindowFrame.y + resizer.startWindowFrame.h
+
+            newFrame.x = fixedX
+            newFrame.y = resizer.startWindowFrame.y + deltaY
+            newFrame.w = resizer.startWindowFrame.w + deltaX
+            newFrame.h = fixedY - newFrame.y
+
+            -- Apply minimum constraints
+            if newFrame.w < minWidth then
+                newFrame.w = minWidth
+            end
+            if newFrame.h < minHeight then
+                newFrame.y = fixedY - minHeight
+                newFrame.h = minHeight
+            end
+
+        elseif resizer.clickRegion == "bl" then
+            -- Bottom-left clicked: keep top-right corner fixed
+            local fixedX = resizer.startWindowFrame.x + resizer.startWindowFrame.w
+            local fixedY = resizer.startWindowFrame.y
+
+            newFrame.x = resizer.startWindowFrame.x + deltaX
+            newFrame.y = fixedY
+            newFrame.w = fixedX - newFrame.x
+            newFrame.h = resizer.startWindowFrame.h + deltaY
+
+            -- Apply minimum constraints
+            if newFrame.w < minWidth then
+                newFrame.x = fixedX - minWidth
+                newFrame.w = minWidth
+            end
+            if newFrame.h < minHeight then
+                newFrame.h = minHeight
+            end
+
+        else  -- "br" - bottom-right
+            -- Bottom-right clicked: keep top-left corner fixed (original behavior)
+            newFrame.x = resizer.startWindowFrame.x
+            newFrame.y = resizer.startWindowFrame.y
+            newFrame.w = resizer.startWindowFrame.w + deltaX
+            newFrame.h = resizer.startWindowFrame.h + deltaY
+
+            -- Apply minimum constraints
+            if newFrame.w < minWidth then
+                newFrame.w = minWidth
+            end
+            if newFrame.h < minHeight then
+                newFrame.h = minHeight
+            end
         end
-        if newHeight < minHeight then
-            newHeight = minHeight
-        end
-        
-        -- Create new frame with updated size (keep top-left corner fixed)
-        local newFrame = {
-            x = resizer.startWindowFrame.x,
-            y = resizer.startWindowFrame.y,
-            w = newWidth,
-            h = newHeight
-        }
-        
+
         -- Force immediate update
         resizer.resizedWindow:setFrame(newFrame, 0)
     end
@@ -72,11 +154,14 @@ resizer.mouseTap = hs.eventtap.new(
                 local windowUnderMouse = getWindowUnderMouse(mousePos)
                 
                 if windowUnderMouse then
-                    print("[Resizer] Starting window resize: " .. windowUnderMouse:title())
+                    local windowFrame = windowUnderMouse:frame()
+                    resizer.clickRegion = detectClickRegion(mousePos, windowFrame)
+
+                    print("[Resizer] Starting window resize: " .. windowUnderMouse:title() .. " (region: " .. resizer.clickRegion .. ")")
                     resizer.isResizing = true
                     resizer.resizedWindow = windowUnderMouse
                     resizer.startMousePos = mousePos
-                    resizer.startWindowFrame = windowUnderMouse:frame()
+                    resizer.startWindowFrame = windowFrame
                     
                     windowUnderMouse:focus()
                     
@@ -105,7 +190,8 @@ resizer.mouseTap = hs.eventtap.new(
                     resizer.resizedWindow = nil
                     resizer.startMousePos = nil
                     resizer.startWindowFrame = nil
-                    
+                    resizer.clickRegion = nil
+
                     return true
                 end
             end
