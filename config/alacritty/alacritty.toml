@@ -41,7 +41,7 @@ glyph_offset  = { x = 0, y = 0 }
 bindings = [
   { key = "V",      mods = "Control|Shift", action = "Paste" },
   { key = "C",      mods = "Control|Shift", action = "Copy" },
-  { key = "Left",   mods = "Control",       chars = "\u001BB" },
-  { key = "Right",  mods = "Control",       chars = "\u001BF" }
+  { key = "Left",   mods = "Control",       chars = "\u001b[1;5H" },
+  { key = "Right",  mods = "Control",       chars = "\u001b[1;5F" }
 ]
 
